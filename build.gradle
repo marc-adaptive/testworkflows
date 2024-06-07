@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
 group = 'org.example'
@@ -7,6 +8,33 @@ version = '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'org.example.Main'
+        )
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            url = 'http://192.168.4.159:8081/artifactory/test-maven-repo/'
+            allowInsecureProtocol = true
+            credentials {
+                username = "admin"
+                password = "Test1234!"
+            }
+        }
+    }
 }
 
 dependencies {
