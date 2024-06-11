@@ -41,4 +41,7 @@ jobs:
     # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
     # the publishing section of your build.gradle
     - name: Publish to GitHub Packages
-      run: ./gradlew publish -Partifactory_username=${{ inputs.username }} -Partifactory_password=${{ inputs.token }}
+      run: ./gradlew publish -Partifactory_username="$USERNAME" -Partifactory_password="$TOKEN"
+      env:
+        USERNAME: ${{ inputs.username }}
+        TOKEN: ${{ inputs.token }}
