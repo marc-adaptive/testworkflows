@@ -8,6 +8,13 @@
 name: Gradle Package
 
 on: workflow_dispatch
+inputs:
+  artifactory username:
+    description: 'Username to log in to artifactory'
+    required: true
+  artifactory_token:
+    description: 'Token to access artifactory'
+    required: true
 
 jobs:
   build:
