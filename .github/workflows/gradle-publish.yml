@@ -10,10 +10,10 @@ name: Gradle Package
 on:
   workflow_dispatch:
     inputs:
-      artifactory_username:
+      username:
         description: 'Username to log in to artifactory'
         required: true
-      artifactory_token:
+      token:
         description: 'Token to access artifactory'
         required: true
 
@@ -44,7 +44,4 @@ jobs:
     # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
     # the publishing section of your build.gradle
     - name: Publish to GitHub Packages
-      run: ./gradlew publish
-#      env:
-#        USERNAME: ${{ github.actor }}
-#        TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: ./gradlew publish -Partifactory_username=${{ inputs.username }} -Partifactory_password=${{ inputs.token }}
