@@ -41,7 +41,7 @@ jobs:
           distribution: 'zulu'
           java-version: '8'
       - name: Publish with Gradle
-        run: ./gradlew :aeron-cluster-standby:publish -Partifactory_username="$USERNAME" -Partifactory_password="$TOKEN"
+        run: ./gradlew publish -Partifactory_username="$USERNAME" -Partifactory_password="$TOKEN"
         env:
           USERNAME: ${{ inputs.username }}
           TOKEN: ${{ inputs.token }}
