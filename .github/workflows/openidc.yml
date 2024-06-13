@@ -30,5 +30,4 @@ jobs:
 
       - name: Publish Build info With JFrog CLI
         run: |
-          touch file.txt
           jf rt u file.txt generic-local/file.txt
