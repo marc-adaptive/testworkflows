@@ -34,7 +34,7 @@ jobs:
           distribution: 'zulu'
           java-version: '8'
       - name: Publish with Gradle
-        run: ./gradlew publish -Partifactory_username=${{ secrets.USERNAME }} -Partifactory_password=${{ secrets.TOKEN }}
+        run: ./gradlew publish -Partifactory_username="$USERNAME" -Partifactory_password="$TOKEN"
         env:
           USERNAME: ${{ secrets.USERNAME }}
           TOKEN: ${{ secrets.TOKEN }}
