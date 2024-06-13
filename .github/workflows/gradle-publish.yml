@@ -9,13 +9,6 @@ name: Gradle Package
 
 on:
   workflow_dispatch:
-    inputs:
-      username:
-        description: 'Username to log in to artifactory'
-        required: true
-      token:
-        description: 'Token to access artifactory'
-        required: true
 
 jobs:
   build:
@@ -43,5 +36,5 @@ jobs:
       - name: Publish with Gradle
         run: ./gradlew publish -Partifactory_username="$USERNAME" -Partifactory_password="$TOKEN"
         env:
-          USERNAME: ${{ inputs.username }}
-          TOKEN: ${{ inputs.token }}
+          USERNAME: ${{ secrets.username }}
+          TOKEN: ${{ secrets.token }}
