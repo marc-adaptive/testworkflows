@@ -36,5 +36,5 @@ jobs:
       - name: Publish with Gradle
         run: ./gradlew publish -Partifactory_username="$USERNAME" -Partifactory_password="$TOKEN"
         env:
-          USERNAME: ${{ secrets.username }}
-          TOKEN: ${{ secrets.token }}
+          USERNAME: ${{ secrets.USERNAME }}
+          TOKEN: ${{ secrets.TOKEN }}
