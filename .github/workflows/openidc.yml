@@ -26,7 +26,7 @@ jobs:
       - name: Setup JFrog CLI
         uses: jfrog/setup-jfrog-cli@v3
         env:
-          JF_URL: http://localhost:8081/artifactory
+          JF_URL: http://localhost:8081
         with:
           oidc-provider-name: github-jfrog
           oidc-audience: my-aud
