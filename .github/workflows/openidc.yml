@@ -66,8 +66,10 @@ jobs:
 #-Partifactory_username="$USERNAME" -Partifactory_password="$TOKEN" -b build.gradle
       - name: Publish Build info With JFrog CLI
         run: |
+          ls -la
           jf gradle-config --use-wrapper
           jf gradle tasks
+          jf gradle artifactoryPublish -b ./build.gradle
 #          jf gradle --version
 #          jf gradle -b build.gradle --version
 #          jf gradle artifactoryPublish -b build.gradle  --stack-trace
