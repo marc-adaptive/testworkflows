@@ -7,7 +7,7 @@ permissions:
   id-token: write
 
 jobs:
-  build:
+  build-c:
     runs-on: [self-hosted]
     env:
       OIDC_AUDIENCE: 'jfrog-github'
@@ -29,3 +29,45 @@ jobs:
         run: |
           touch file.txt
           jf rt u file.txt generic-local/file.txt
+
+  build-java:
+    runs-on: [self-hosted]
+    env:
+      OIDC_AUDIENCE: 'jfrog-github'
+      OIDC_PROVIDER: 'github'
+      PLATFORM_REPO: 'test-maven-repo'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup JFrog CLI
+        uses: jfrog/setup-jfrog-cli@v3
+        env:
+          JF_URL: http://localhost:8081
+        with:
+          oidc-provider-name: github-jfrog
+          oidc-audience: my-aud
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Setup BUILD_JAVA_HOME & BUILD_JAVA_VERSION
+        run: |
+          java -Xinternalversion
+          echo "BUILD_JAVA_HOME=${JAVA_HOME}" >> $GITHUB_ENV
+          echo "BUILD_JAVA_VERSION=8" >> $GITHUB_ENV
+
+      - name: Setup java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '8'
+
+      - name: Publish Build info With JFrog CLI
+        run: |
+          jf gradle-config
+          jf gradle publish -Partifactory_username="$USERNAME" -Partifactory_password="$TOKEN"
+        env:
+          USERNAME: ${{ secrets.USERNAME }}
+          TOKEN: ${{ secrets.TOKEN }}
