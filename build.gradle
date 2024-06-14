@@ -35,6 +35,8 @@ artifactory {
             repoKey = 'test-maven-repo'
 //            username = 'admin'
 //            password = 'Test1234!'
+            username = System.getenv('JF_USER')
+            password = System.getenv('JF_PASSWORD')
         }
 
         defaults {
