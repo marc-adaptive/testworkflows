@@ -68,11 +68,11 @@ jobs:
         run: |
           ls -la
           printenv
-          jf gradle-config --use-wrapper --uses-plugin --repo-deploy=test-maven-repo
+          jf gradle-config --use-wrapper --repo-deploy=test-maven-repo
           jf gradle tasks
-          jf gradle --build-name=testworkflows --build-number=1 clean build --no-daemon -b ./build.gradle
+          jf gradle clean artifactoryPublish --no-daemon -b ./build.gradle
           
-          jf rt bp testworkflows 1
+          jf rt bp
 #          jf gradle --version
 #          jf gradle -b build.gradle --version
 #          jf gradle artifactoryPublish -b build.gradle  --stack-trace
