@@ -66,10 +66,6 @@ jobs:
 
       - name: Publish Build info With JFrog CLI
         run: |
-          ls -la
-          printenv
           jf gradle-config --use-wrapper --repo-deploy=test-maven-repo
-          jf gradle tasks
           jf gradle clean artifactoryPublish --no-daemon -b ./build.gradle
-          
           jf rt bp
