@@ -66,8 +66,8 @@ jobs:
 
       - name: Publish Build info With JFrog CLI
         run: |
-          jf gradle-config
-          jf gradle publish -Partifactory_username="$USERNAME" -Partifactory_password="$TOKEN"
+          jf gradle-config -b build.gradle
+          jf gradle publish -Partifactory_username="$USERNAME" -Partifactory_password="$TOKEN" -b build.gradle
         env:
           USERNAME: ${{ secrets.USERNAME }}
           TOKEN: ${{ secrets.TOKEN }}
