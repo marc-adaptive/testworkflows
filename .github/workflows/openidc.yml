@@ -72,6 +72,8 @@ jobs:
           jf gradle tasks
           jf gradle clean build -b ./build.gradle
           
+          jf rt bce
+          jf rt bag
           jf rt bp
 #          jf gradle --version
 #          jf gradle -b build.gradle --version
