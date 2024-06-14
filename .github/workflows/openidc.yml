@@ -7,28 +7,28 @@ permissions:
   id-token: write
 
 jobs:
-  build-c:
-    runs-on: [self-hosted]
-    env:
-      OIDC_AUDIENCE: 'jfrog-github'
-      OIDC_PROVIDER: 'github'
-      PLATFORM_REPO: 'generic-local'
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Setup JFrog CLI
-        uses: jfrog/setup-jfrog-cli@v3
-        env:
-          JF_URL: http://localhost:8081
-        with:
-          oidc-provider-name: github-jfrog
-          oidc-audience: my-aud
-
-      - name: Publish Build info With JFrog CLI
-        run: |
-          touch file.txt
-          jf rt u file.txt generic-local/file.txt
+#  build-c:
+#    runs-on: [self-hosted]
+#    env:
+#      OIDC_AUDIENCE: 'jfrog-github'
+#      OIDC_PROVIDER: 'github'
+#      PLATFORM_REPO: 'generic-local'
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#
+#      - name: Setup JFrog CLI
+#        uses: jfrog/setup-jfrog-cli@v3
+#        env:
+#          JF_URL: http://localhost:8081
+#        with:
+#          oidc-provider-name: github-jfrog
+#          oidc-audience: my-aud
+#
+#      - name: Publish Build info With JFrog CLI
+#        run: |
+#          touch file.txt
+#          jf rt u file.txt generic-local/file.txt
 
   build-java:
     runs-on: [self-hosted]
@@ -66,7 +66,6 @@ jobs:
 
       - name: Publish Build info With JFrog CLI
         run: |
-          jf gradle-config -b build.gradle
           jf gradle publish -Partifactory_username="$USERNAME" -Partifactory_password="$TOKEN" -b build.gradle
         env:
           USERNAME: ${{ secrets.USERNAME }}
