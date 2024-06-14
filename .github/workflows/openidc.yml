@@ -70,7 +70,9 @@ jobs:
           printenv
           jf gradle-config --use-wrapper --uses-plugin
           jf gradle tasks
-          jf gradle artifactoryPublish -b ./build.gradle
+          jf gradle clean build -b ./build.gradle
+          
+          jf bp
 #          jf gradle --version
 #          jf gradle -b build.gradle --version
 #          jf gradle artifactoryPublish -b build.gradle  --stack-trace
