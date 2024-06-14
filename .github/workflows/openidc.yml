@@ -68,7 +68,7 @@ jobs:
         run: |
           ls -la
           printenv
-          jf gradle-config --use-wrapper --repo-deploy=test-maven-repo
+          jf gradle-config --use-wrapper --uses-plugin --repo-deploy=test-maven-repo
           jf gradle tasks
           jf gradle clean build -b ./build.gradle
           
