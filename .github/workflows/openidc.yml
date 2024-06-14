@@ -69,4 +69,4 @@ jobs:
           jf gradle-config --use-wrapper
           jf gradle --version
           jf gradle -b build.gradle --version
-          jf gradle publish -b build.gradle 
+          jf gradle artifactoryPublish -b build.gradle 

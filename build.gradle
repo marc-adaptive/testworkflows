@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'maven-publish'
+    id 'com.jfrog.artifactory' version "5.2.1"
 }
 
 group = 'org.example'
@@ -24,15 +25,20 @@ publishing {
             from components.java
         }
     }
+}
 
-    repositories {
-        maven {
-            url = 'http://localhost:8081/artifactory/test-maven-repo/'
-            allowInsecureProtocol = true
-            credentials {
-                username = artifactory_username
-                password = artifactory_password
-            }
+artifactory {
+    publish {
+        contextUrl = "http://localhost:8081/artifactory"
+
+        repository {
+            repoKey = 'test-maven-repo'
+//            username = 'admin'
+//            password = 'Test1234!'
+        }
+
+        defaults {
+            publications('mavenJava')
         }
     }
 }
