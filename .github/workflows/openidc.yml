@@ -70,11 +70,9 @@ jobs:
           printenv
           jf gradle-config --use-wrapper --uses-plugin --repo-deploy=test-maven-repo
           jf gradle tasks
-          jf gradle clean build -b ./build.gradle
+          jf gradle clean build --project=testworkflows -b ./build.gradle
           
-          jf rt bce
-          jf rt bag
-          jf rt bp
+          jf rt bp --project=testworkflows
 #          jf gradle --version
 #          jf gradle -b build.gradle --version
 #          jf gradle artifactoryPublish -b build.gradle  --stack-trace
