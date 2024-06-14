@@ -27,21 +27,21 @@ publishing {
     }
 }
 
-artifactory {
-    publish {
-        contextUrl = "http://localhost:8081/artifactory"
-
-        repository {
-            repoKey = 'test-maven-repo'
+//artifactory {
+//    publish {
+//        contextUrl = "http://localhost:8081/artifactory"
+//
+//        repository {
+//            repoKey = 'test-maven-repo'
 //            username = 'admin'
 //            password = 'Test1234!'
-        }
-
-        defaults {
-            publications('mavenJava')
-        }
-    }
-}
+//        }
+//
+//        defaults {
+//            publications('mavenJava')
+//        }
+//    }
+//}
 
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
