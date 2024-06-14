@@ -63,7 +63,7 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '8'
-#-Partifactory_username="$USERNAME" -Partifactory_password="$TOKEN" -b build.gradle
+
       - name: Publish Build info With JFrog CLI
         run: |
           ls -la
@@ -73,6 +73,3 @@ jobs:
           jf gradle clean artifactoryPublish --no-daemon -b ./build.gradle
           
           jf rt bp
-#          jf gradle --version
-#          jf gradle -b build.gradle --version
-#          jf gradle artifactoryPublish -b build.gradle  --stack-trace
