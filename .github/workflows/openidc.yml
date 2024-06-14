@@ -67,6 +67,7 @@ jobs:
       - name: Publish Build info With JFrog CLI
         run: |
           ls -la
+          printenv
           jf gradle-config --use-wrapper --uses-plugin
           jf gradle tasks
           jf gradle artifactoryPublish -b ./build.gradle
