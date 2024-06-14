@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'maven-publish'
-//    id 'com.jfrog.artifactory' version "5.2.1"
+    id 'com.jfrog.artifactory' version "5.2.1"
 }
 
 group = 'org.example'
@@ -33,8 +33,8 @@ artifactory {
 
         repository {
             repoKey = 'test-maven-repo'
-            username = 'admin'
-            password = 'Test1234!'
+//            username = 'admin'
+//            password = 'Test1234!'
         }
 
         defaults {
