@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'maven-publish'
-    id 'com.jfrog.artifactory' version "5.2.1"
+//    id 'com.jfrog.artifactory' version "5.2.1"
 }
 
 group = 'org.example'
@@ -27,21 +27,21 @@ publishing {
     }
 }
 
-//artifactory {
-//    publish {
-//        contextUrl = "http://localhost:8081/artifactory"
-//
-//        repository {
-//            repoKey = 'test-maven-repo'
-//            username = 'admin'
-//            password = 'Test1234!'
-//        }
-//
-//        defaults {
-//            publications('mavenJava')
-//        }
-//    }
-//}
+artifactory {
+    publish {
+        contextUrl = "http://localhost:8081/artifactory"
+
+        repository {
+            repoKey = 'test-maven-repo'
+            username = 'admin'
+            password = 'Test1234!'
+        }
+
+        defaults {
+            publications('mavenJava')
+        }
+    }
+}
 
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
