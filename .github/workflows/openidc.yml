@@ -72,7 +72,7 @@ jobs:
           jf gradle tasks
           jf gradle clean build -b ./build.gradle
           
-          jf bp
+          jf rt bp
 #          jf gradle --version
 #          jf gradle -b build.gradle --version
 #          jf gradle artifactoryPublish -b build.gradle  --stack-trace
