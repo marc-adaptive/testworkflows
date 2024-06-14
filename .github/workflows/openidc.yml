@@ -67,6 +67,7 @@ jobs:
       - name: Publish Build info With JFrog CLI
         run: |
           jf gradle-config --use-wrapper
-          jf gradle --version
-          jf gradle -b build.gradle --version
-          jf gradle artifactoryPublish -b build.gradle  --stack-trace
+          jf gradle tasks
+#          jf gradle --version
+#          jf gradle -b build.gradle --version
+#          jf gradle artifactoryPublish -b build.gradle  --stack-trace
