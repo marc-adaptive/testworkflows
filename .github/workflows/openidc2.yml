@@ -57,8 +57,9 @@ jobs:
       id-token: write
     runs-on: [self-hosted]
     strategy:
-      - matrix.config.os: ubuntu
-      - matrix.config.version = latest
+      matrix:
+      - config.os: ubuntu
+      - config.version = latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
