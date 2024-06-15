@@ -58,10 +58,9 @@ jobs:
     runs-on: [self-hosted]
     strategy:
       matrix:
-        os:
-          - ubuntu
-        version:
-          - latest
+        include:
+          - os: ubuntu
+            version: latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
