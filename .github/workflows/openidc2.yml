@@ -34,8 +34,8 @@ jobs:
       - name: Setup JFrog CLI
         uses: jfrog/setup-jfrog-cli@v4
         with:
-          oidc-provider-name: "$OIDC_PROVIDER"
-          oidc-audience: "$OIDC_AUDIENCE"
+          oidc-provider-name: ${{ env.OIDC_PROVIDER }}
+          oidc-audience: ${{ env.OIDC_AUDIENCE }}
       - name: Setup BUILD_JAVA_HOME & BUILD_JAVA_VERSION
         run: |
           echo "BUILD_JAVA_HOME=${JAVA_HOME}" >> $GITHUB_ENV
