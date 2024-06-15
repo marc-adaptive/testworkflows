@@ -58,8 +58,10 @@ jobs:
     runs-on: [self-hosted]
     strategy:
       matrix:
-      - config.os: ubuntu
-      - config.version = latest
+        os:
+          - ubuntu
+        version:
+          - latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -77,12 +79,12 @@ jobs:
       - name: Build docker image
         uses: docker/build-push-action@v5
         with:
-          file: ./cppbuild/${{ matrix.config.os }}/Dockerfile
+          file: ./cppbuild/${{ matrix.os }}/Dockerfile
           pull: true
           shm-size: 2g
-          outputs: build/${{ matrix.config.os }}
+          outputs: build/${{ matrix.os }}
           target: essential-artifacts
           build-args: |
-            VERSION = ${{ matrix.config.version }}
+            VERSION = ${{ matrix.version }}
       - name: Publish Build info With JFrog CLI
         run: jf rt u *.txt generic-local/
