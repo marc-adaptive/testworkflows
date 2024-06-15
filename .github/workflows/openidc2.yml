@@ -1,4 +1,4 @@
-name: "test-using-oidc"
+name: "oidc-test2"
 run-name: "${{ github.actor }} triggered ${{ github.workflow }}"
 on:
   workflow_dispatch:
