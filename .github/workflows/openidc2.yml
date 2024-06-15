@@ -87,4 +87,4 @@ jobs:
           build-args: |
             VERSION = ${{ matrix.version }}
       - name: Publish Build info With JFrog CLI
-        run: jf rt u *.txt generic-local/
+        run: jf rt u build/${{ matrix.os }}*.txt generic-local/
