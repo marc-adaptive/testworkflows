@@ -19,37 +19,37 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  publish-java:
-    name: Publish cluster java artifacts to repo
-    permissions:
-      id-token: write
-    #needs
-    runs-on: [self-hosted]
-    #environment
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.sha }}
-      - name: Setup JFrog CLI
-        uses: jfrog/setup-jfrog-cli@v4
-        with:
-          oidc-provider-name: ${{ env.OIDC_PROVIDER }}
-          oidc-audience: ${{ env.OIDC_AUDIENCE }}
-      - name: Setup BUILD_JAVA_HOME & BUILD_JAVA_VERSION
-        run: |
-          echo "BUILD_JAVA_HOME=${JAVA_HOME}" >> $GITHUB_ENV
-          echo "BUILD_JAVA_VERSION=8" >> $GITHUB_ENV
-      - name: Setup java
-        uses: actions/setup-java@v4
-        with:
-          java-version: '8'
-          distribution: 'zulu'
-      - name: Publish Build info With JFrog CLI
-        run: |
-          jf gradle-config --use-wrapper --repo-deploy=test-maven-repo
-          jf gradle clean artifactoryPublish --no-daemon -b ./build.gradle
-          jf rt bp
+#  publish-java:
+#    name: Publish cluster java artifacts to repo
+#    permissions:
+#      id-token: write
+#    #needs
+#    runs-on: [self-hosted]
+#    #environment
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v4
+#        with:
+#          ref: ${{ github.sha }}
+#      - name: Setup JFrog CLI
+#        uses: jfrog/setup-jfrog-cli@v4
+#        with:
+#          oidc-provider-name: ${{ env.OIDC_PROVIDER }}
+#          oidc-audience: ${{ env.OIDC_AUDIENCE }}
+#      - name: Setup BUILD_JAVA_HOME & BUILD_JAVA_VERSION
+#        run: |
+#          echo "BUILD_JAVA_HOME=${JAVA_HOME}" >> $GITHUB_ENV
+#          echo "BUILD_JAVA_VERSION=8" >> $GITHUB_ENV
+#      - name: Setup java
+#        uses: actions/setup-java@v4
+#        with:
+#          java-version: '8'
+#          distribution: 'zulu'
+#      - name: Publish Build info With JFrog CLI
+#        run: |
+#          jf gradle-config --use-wrapper --repo-deploy=test-maven-repo
+#          jf gradle clean artifactoryPublish --no-daemon -b ./build.gradle
+#          jf rt bp
 
   publish-c:
     name: Publish c builds
