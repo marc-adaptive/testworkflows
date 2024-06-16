@@ -73,6 +73,7 @@ jobs:
       - name: Build docker image
         uses: docker/build-push-action@v5
         with:
+          context: .
           file: ./cppbuild/${{ matrix.os }}/Dockerfile
           pull: true
           shm-size: 2g
