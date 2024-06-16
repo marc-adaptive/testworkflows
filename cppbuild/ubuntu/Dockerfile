@@ -2,6 +2,8 @@ FROM ubuntu:20.04 AS builder
 
 ARG DEBIAN_FRONTEND=noninteractive
 
+RUN echo 'HI' > test.txt
+
 RUN adduser athena
 
 ENV TZ=Etc/UTC
@@ -17,4 +19,4 @@ RUN git update-index -q --refresh
 
 FROM scratch as essential-artifacts
 
-COPY --from=builder ./opt/aeron/ /
+COPY --from=builder ./*.txt /

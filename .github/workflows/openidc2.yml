@@ -86,6 +86,14 @@ jobs:
         with:
           oidc-provider-name: ${{ env.OIDC_PROVIDER }}
           oidc-audience: ${{ env.OIDC_AUDIENCE }}
+#      - name: Publish Build info With JFrog CLI
+#        run: jf rt u *.txt generic-local/
+#        working-directory: ./build/${{ matrix.os }}
       - name: Publish Build info With JFrog CLI
-        run: jf rt u *.txt generic-local/
-        working-directory: ./build/${{ matrix.os }}
+        run: |
+          for FILE in *; do
+            case $FILE in
+              *-src.tar.gz) ;;
+              *.txt) jf rt u *.txt generic-local/ ;;
+            esac
+          done
