@@ -97,3 +97,4 @@ jobs:
               *.txt) jf rt u *.txt generic-local/ ;;
             esac
           done
+        working-directory: ./build/${{ matrix.os }}
