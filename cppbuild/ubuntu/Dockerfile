@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y git
 
 USER athena
 WORKDIR /opt/aeron
-ADD --chown=athena:athena --keep-git-dir=true . /opt/aeron
+ADD --keep-git-dir=true --chown=athena:athena . /opt/aeron
 
 # without this +guilty will get added (stat entries in git index out of date after copying into a container):
 RUN git update-index -q --refresh
@@ -17,4 +17,4 @@ RUN git update-index -q --refresh
 
 FROM scratch as essential-artifacts
 
-COPY --from=builder ./*.txt /
+COPY --from=builder ./opt/aeron/ /
