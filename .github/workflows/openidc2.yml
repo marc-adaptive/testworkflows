@@ -19,82 +19,87 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-#  publish-java:
-#    name: Publish cluster java artifacts to repo
-#    permissions:
-#      id-token: write
-#    #needs
-#    runs-on: [self-hosted]
-#    #environment
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#        with:
-#          ref: ${{ github.sha }}
-#      - name: Setup JFrog CLI
-#        uses: jfrog/setup-jfrog-cli@v4
-#        with:
-#          oidc-provider-name: ${{ env.OIDC_PROVIDER }}
-#          oidc-audience: ${{ env.OIDC_AUDIENCE }}
-#      - name: Setup BUILD_JAVA_HOME & BUILD_JAVA_VERSION
-#        run: |
-#          echo "BUILD_JAVA_HOME=${JAVA_HOME}" >> $GITHUB_ENV
-#          echo "BUILD_JAVA_VERSION=8" >> $GITHUB_ENV
-#      - name: Setup java
-#        uses: actions/setup-java@v4
-#        with:
-#          java-version: '8'
-#          distribution: 'zulu'
-#      - name: Publish Build info With JFrog CLI
-#        run: |
-#          jf gradle-config --use-wrapper --repo-deploy=test-maven-repo
-#          jf gradle clean artifactoryPublish --no-daemon -b ./build.gradle
-#          jf rt bp
-
-  publish-c:
-    name: Publish c builds
+  publish-java:
+    name: Publish cluster java artifacts to repo
     permissions:
       id-token: write
+    #needs
     runs-on: [self-hosted]
-    strategy:
-      matrix:
-        include:
-          - os: ubuntu
-            version: latest
+    #environment
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-      - name: Build docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./cppbuild/${{ matrix.os }}/Dockerfile
-          pull: true
-          shm-size: 2g
-          outputs: build/${{ matrix.os }}
-          target: essential-artifacts
-          build-args: |
-            VERSION = ${{ matrix.version }}
       - name: Setup JFrog CLI
         uses: jfrog/setup-jfrog-cli@v4
         with:
           oidc-provider-name: ${{ env.OIDC_PROVIDER }}
           oidc-audience: ${{ env.OIDC_AUDIENCE }}
-#      - name: Publish Build info With JFrog CLI
-#        run: jf rt u *.txt generic-local/
-#        working-directory: ./build/${{ matrix.os }}
+      - name: Setup BUILD_JAVA_HOME & BUILD_JAVA_VERSION
+        run: |
+          echo "BUILD_JAVA_HOME=${JAVA_HOME}" >> $GITHUB_ENV
+          echo "BUILD_JAVA_VERSION=8" >> $GITHUB_ENV
+      - name: Setup java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '8'
+          distribution: 'zulu'
       - name: Publish Build info With JFrog CLI
         run: |
-          for FILE in *; do
-            case $FILE in
-              *-src.tar.gz) ;;
-              *.txt) jf rt u *.txt generic-local/ ;;
-            esac
-          done
-        working-directory: ./build/${{ matrix.os }}
+          jf gradle-config --use-wrapper --repo-deploy=test-maven-repo
+          jf gradle clean artifactoryPublish --no-daemon -b ./build.gradle
+          jf rt bp
+      - name: Publish Java Artifacts To Github
+        uses: actions/upload-artifact@v4
+        with:
+          name: test
+          path: build/libs/*
+
+#  publish-c:
+#    name: Publish c builds
+#    permissions:
+#      id-token: write
+#    runs-on: [self-hosted]
+#    strategy:
+#      matrix:
+#        include:
+#          - os: ubuntu
+#            version: latest
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v4
+#        with:
+#          ref: ${{ github.sha }}
+#      - name: Set up QEMU
+#        uses: docker/setup-qemu-action@v3
+#      - name: Set up Docker Buildx
+#        uses: docker/setup-buildx-action@v3
+#      - name: Build docker image
+#        uses: docker/build-push-action@v5
+#        with:
+#          context: .
+#          file: ./cppbuild/${{ matrix.os }}/Dockerfile
+#          pull: true
+#          shm-size: 2g
+#          outputs: build/${{ matrix.os }}
+#          target: essential-artifacts
+#          build-args: |
+#            VERSION = ${{ matrix.version }}
+#      - name: Setup JFrog CLI
+#        uses: jfrog/setup-jfrog-cli@v4
+#        with:
+#          oidc-provider-name: ${{ env.OIDC_PROVIDER }}
+#          oidc-audience: ${{ env.OIDC_AUDIENCE }}
+##      - name: Publish Build info With JFrog CLI
+##        run: jf rt u *.txt generic-local/
+##        working-directory: ./build/${{ matrix.os }}
+#      - name: Publish Build info With JFrog CLI
+#        run: |
+#          for FILE in *; do
+#            case $FILE in
+#              *-src.tar.gz) ;;
+#              *.txt) jf rt u *.txt generic-local/ ;;
+#            esac
+#          done
+#        working-directory: ./build/${{ matrix.os }}
