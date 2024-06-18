@@ -33,6 +33,8 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '8'
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v3
       - name: Publish with Gradle
         run: ./gradlew publish -Partifactory_username="$USERNAME" -Partifactory_password="$TOKEN"
         env:
