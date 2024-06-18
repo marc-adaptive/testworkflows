@@ -8,6 +8,11 @@ on:
         required: true
         default: true
         type: boolean
+      release:
+        description: Should publish to release
+        required: true
+        default: false
+        type: boolean
 
 env:
   JF_URL: http://localhost:8081
@@ -47,7 +52,7 @@ jobs:
           distribution: 'zulu'
       - name: Publish Build info With JFrog CLI
         run: |
-          jf gradle-config --use-wrapper --repo-deploy=test-maven-repo
+          jf gradle-config --use-wrapper --repo-deploy=${{ inputs.release && 'backup-maven-repo' || 'test-maven-repo' }}
           jf gradle clean artifactoryPublish --no-daemon -b ./build.gradle
           jf rt bp
       - name: Publish Java Artifacts To Github
@@ -56,50 +61,50 @@ jobs:
           name: test
           path: build/libs/*
 
-#  publish-c:
-#    name: Publish c builds
-#    permissions:
-#      id-token: write
-#    runs-on: [self-hosted]
-#    strategy:
-#      matrix:
-#        include:
-#          - os: ubuntu
-#            version: latest
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#        with:
-#          ref: ${{ github.sha }}
-#      - name: Set up QEMU
-#        uses: docker/setup-qemu-action@v3
-#      - name: Set up Docker Buildx
-#        uses: docker/setup-buildx-action@v3
-#      - name: Build docker image
-#        uses: docker/build-push-action@v5
-#        with:
-#          context: .
-#          file: ./cppbuild/${{ matrix.os }}/Dockerfile
-#          pull: true
-#          shm-size: 2g
-#          outputs: build/${{ matrix.os }}
-#          target: essential-artifacts
-#          build-args: |
-#            VERSION = ${{ matrix.version }}
-#      - name: Setup JFrog CLI
-#        uses: jfrog/setup-jfrog-cli@v4
-#        with:
-#          oidc-provider-name: ${{ env.OIDC_PROVIDER }}
-#          oidc-audience: ${{ env.OIDC_AUDIENCE }}
-##      - name: Publish Build info With JFrog CLI
-##        run: jf rt u *.txt generic-local/
-##        working-directory: ./build/${{ matrix.os }}
+  publish-c:
+    name: Publish c builds
+    permissions:
+      id-token: write
+    runs-on: [self-hosted]
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu
+            version: latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./cppbuild/${{ matrix.os }}/Dockerfile
+          pull: true
+          shm-size: 2g
+          outputs: build/${{ matrix.os }}
+          target: essential-artifacts
+          build-args: |
+            VERSION = ${{ matrix.version }}
+      - name: Setup JFrog CLI
+        uses: jfrog/setup-jfrog-cli@v4
+        with:
+          oidc-provider-name: ${{ env.OIDC_PROVIDER }}
+          oidc-audience: ${{ env.OIDC_AUDIENCE }}
 #      - name: Publish Build info With JFrog CLI
-#        run: |
-#          for FILE in *; do
-#            case $FILE in
-#              *-src.tar.gz) ;;
-#              *.txt) jf rt u *.txt generic-local/ ;;
-#            esac
-#          done
+#        run: jf rt u *.txt generic-local/
 #        working-directory: ./build/${{ matrix.os }}
+      - name: Publish Build info With JFrog CLI
+        run: |
+          for FILE in *; do
+            case $FILE in
+              *-src.tar.gz) ;;
+              *.txt) jf rt u *.txt ${{ inputs.release && 'generic-local/' || 'backup-local/' }} ;;
+            esac
+          done
+        working-directory: ./build/${{ matrix.os }}

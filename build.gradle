@@ -11,6 +11,10 @@ repositories {
     mavenCentral()
 }
 
+//java {
+//    withJavadocJar()
+//}
+
 jar {
     manifest {
         attributes(
@@ -26,24 +30,24 @@ publishing {
         }
     }
 
-    repositories {
-        maven {
-            url = 'http://localhost:8081/artifactory/test-maven-repo'
-            allowInsecureProtocol = true
-            credentials {
-                username = artifactory_username
-                password = artifactory_password
-            }
-        }
-    }
+//    repositories {
+//        maven {
+//            url = 'http://localhost:8081/artifactory/test-maven-repo'
+//            allowInsecureProtocol = true
+//            credentials {
+//                username = artifactory_username
+//                password = artifactory_password
+//            }
+//        }
+//    }
 }
 
-signing {
-    def signingKey = findProperty("signingKey")
-    def signingPassword = findProperty("signingPassword")
-    useInMemoryPgpKeys(signingKey, signingPassword)
-    sign publishing.publications.mavenJava
-}
+//signing {
+//    def signingKey = findProperty("signingKey")
+//    def signingPassword = findProperty("signingPassword")
+//    useInMemoryPgpKeys(signingKey, signingPassword)
+//    sign publishing.publications.mavenJava
+//}
 
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
