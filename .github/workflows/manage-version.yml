@@ -79,7 +79,12 @@ jobs:
           minor=${{ inputs.minor-version }}
           patch=${{ inputs.patch-version }}
   
+          let "minor_incr=minor+1"
           let "patch_incr=patch+1"
+          
+          CREATE_BRANCH=true
+          SNAPSHOT_VERSION="$major.$minor_incr.$patch"
+          NEW_BRANCH="release-$major.$minor.$patch"
           BRANCH_SNAPSHOT_VERSION="$major.$minor.$patch_incr-SNAPSHOT"
   
           echo "release-version=$major.$minor.$patch" >> $GITHUB_ENV
