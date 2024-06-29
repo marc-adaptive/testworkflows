@@ -73,6 +73,7 @@ jobs:
       - name: Post-build version
         id: identify-post-build-version
         if: ${{ inputs.release && !inputs.pre-build }}
+        shell: bash
         run:
           let MAJOR=${{ inputs.major-version }}
           let MINOR=${{ inputs.minor-version }}
