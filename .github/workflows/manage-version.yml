@@ -1,28 +1,6 @@
 name: Manage version
 
 on:
-  workflow_dispatch:
-    inputs:
-      release:
-        description: Is release?
-        required: true
-        type: boolean
-      pre-build:
-        description: Is this before build?
-        required: true
-        type: boolean
-      major-version:
-        required: true
-        description: major
-        type: number
-      minor-version:
-        required: true
-        description: minor
-        type: number
-      patch-version:
-        required: true
-        description: patch
-        type: number
   workflow_call:
     inputs:
       release:
@@ -73,11 +51,11 @@ jobs:
       - name: Post-build version
         id: identify-post-build-version
         if: ${{ inputs.release && !inputs.pre-build }}
-        run:
-          major=${{ inputs.major-version }};
-          minor=${{ inputs.minor-version }};
-          patch=${{ inputs.patch-version }};
-          let "patch_incr=patch+1";
+        run: |
+          major=${{ inputs.major-version }}
+          minor=${{ inputs.minor-version }}
+          patch=${{ inputs.patch-version }}
+          let "patch_incr=patch+1"
           echo "BUILD_VERSION=$major.$minor.$patch_incr-SNAPSHOT" >> $GITHUB_ENV
       - name: Commit version to Current Branch
         id: commit-version
