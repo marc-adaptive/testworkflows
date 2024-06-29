@@ -73,27 +73,16 @@ jobs:
       - name: Post-build version
         id: identify-post-build-version
         if: ${{ inputs.release && !inputs.pre-build }}
-        shell: bash
         run:
           major=${{ inputs.major-version }}
           minor=${{ inputs.minor-version }}
           patch=${{ inputs.patch-version }}
   
-          let "minor_incr=minor+1"
           let "patch_incr=patch+1"
-          
-          CREATE_BRANCH=true
-          SNAPSHOT_VERSION="$major.$minor_incr.$patch"
-          NEW_BRANCH="release-$major.$minor.$patch"
           BRANCH_SNAPSHOT_VERSION="$major.$minor.$patch_incr-SNAPSHOT"
-  
-          echo "release-version=$major.$minor.$patch" >> $GITHUB_ENV
-          echo "create-branch=$CREATE_BRANCH" >> $GITHUB_ENV
-          echo "snapshot-version=$SNAPSHOT_VERSION-SNAPSHOT" >> $GITHUB_ENV
-          echo "new-branch=$NEW_BRANCH" >> $GITHUB_ENV
-          echo "branch-snapshot-version=$BRANCH_SNAPSHOT_VERSION" >> $GITHUB_ENV
+          echo "BUILD_VERSION=$BRANCH_SNAPSHOT_VERSION" >> $GITHUB_ENV
       - name: Test
-        run: echo ${{ env.release-version }}
+        run: echo ${{ env.BUILD_VERSION }}
 #      - name: Commit version to Current Branch
 #        id: commit-version
 #        if: ${{ inputs.release }}
