@@ -97,4 +97,6 @@ jobs:
           git push origin refs/tags/${{ env.BUILD_VERSION }}
       - name: Return current SHA
         id: return-sha
-        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+        run: |
+          git rev-parse HEAD
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
