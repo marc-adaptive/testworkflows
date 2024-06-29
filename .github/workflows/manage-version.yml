@@ -88,7 +88,7 @@ jobs:
           echo ${{ env.BUILD_VERSION }} > version.txt
           git add version.txt
           git status
-          git commit -m "${{ env.BUILD_VERSION }} released."
+          git commit -m "${{ env.BUILD_VERSION }} version update."
           git push
       - name: Tag Branch
         id: tag-branch
