@@ -82,7 +82,7 @@ jobs:
           
           BRANCH_SNAPSHOT_VERSION="$major.$minor.$patch_incr-SNAPSHOT"
           
-          echo "BUILD_VERSION=$BRANCH_SNAPSHOT_VERSION" >> $GITHUB_ENV
+          echo "BUILD_VERSION=$major.$minor.$patch_incr-SNAPSHOT" >> $GITHUB_ENV
 
       - name: Test
         run: echo ${{ env.BUILD_VERSION }}
