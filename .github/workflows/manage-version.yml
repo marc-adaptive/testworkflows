@@ -74,9 +74,9 @@ jobs:
         id: identify-post-build-version
         if: ${{ inputs.release && !inputs.pre-build }}
         run:
-          MAJOR=${{ inputs.major-version }}
-          MINOR=${{ inputs.minor-version }}
-          PATCH=${{ inputs.patch-version }}+1  
+          let MAJOR=${{ inputs.major-version }}
+          let MINOR=${{ inputs.minor-version }}
+          let PATCH=${{ inputs.patch-version }}+1  
           echo "BUILD_VERSION=$MAJOR.$MINOR.$PATCH-SNAPSHOT" >> $GITHUB_ENV
           echo ${{ env.BUILD_VERSION }}
       - name: Test
