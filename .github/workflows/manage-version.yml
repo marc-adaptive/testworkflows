@@ -1,32 +1,27 @@
 name: Manage version
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       release:
-        description: Is release?
         required: true
         type: boolean
       pre-build:
-        description: Is this before build?
         required: true
         type: boolean
       major-version:
         required: true
-        description: major
         type: number
       minor-version:
         required: true
-        description: minor
         type: number
       patch-version:
         required: true
-        description: patch
         type: number
-#    outputs:
-#      sha:
-#        description: Current SHA after version update
-#        value: ${{ jobs.manage-version.outputs.sha }}
+    outputs:
+      sha:
+        description: Current SHA after version update
+        value: ${{ jobs.manage-version.outputs.sha }}
 
 permissions:
   contents: write
