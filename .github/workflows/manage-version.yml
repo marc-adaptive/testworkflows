@@ -79,9 +79,6 @@ jobs:
           patch=${{ inputs.patch-version }}
           
           let "patch_incr=patch+1"
-          
-          BRANCH_SNAPSHOT_VERSION="$major.$minor.$patch_incr-SNAPSHOT"
-          
           echo "BUILD_VERSION=$major.$minor.$patch_incr-SNAPSHOT" >> $GITHUB_ENV
 
       - name: Test
