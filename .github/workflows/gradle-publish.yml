@@ -36,7 +36,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v3
       - name: Publish with Gradle
-        run: ./gradlew publish -Partifactory_username="$USERNAME" -Partifactory_password="$TOKEN"
+        run: ./gradlew publish -Partifactory_username="$USERNAME" -Partifactory_password="$TOKEN" --no-daemon
         env:
           USERNAME: ${{ secrets.USERNAME }}
           TOKEN: ${{ secrets.TOKEN }}
