@@ -78,7 +78,13 @@ jobs:
           let minor=${{ inputs.minor-version }}
           let patch=${{ inputs.patch-version }}+1
           let nextversion=$major.$minor.$patch
-          echo "BUILD_VERSION=$nextversion-SNAPSHOT" >> $GITHUB_ENV
+          echo $major
+          echo $minor
+          echo $patch
+          echo $nextversion
+          echo $nextversion-SNAPSHOT
+          
+          echo "BUILD_VERSION=$nextversion" >> $GITHUB_ENV
       - name: Commit version to Current Branch
         id: commit-version
         if: ${{ inputs.release }}
