@@ -69,7 +69,7 @@ jobs:
       - name: Pre-build version
         id: identify-pre-build-version
         if: ${{ inputs.release && inputs.pre-build }}
-        run: echo "BUILD_VERSION=${{ inputs.major-version }}.${{ inputs.minor-verison }}.${{ inputs.patch-version }}" >> $GITHUB_ENV
+        run: echo "BUILD_VERSION=${{ inputs.major-version }}.${{ inputs.minor-version }}.${{ inputs.patch-version }}" >> $GITHUB_ENV
       - name: Post-build version
         id: identify-post-build-version
         if: ${{ inputs.release && !inputs.pre-build }}
