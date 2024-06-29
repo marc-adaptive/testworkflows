@@ -78,6 +78,7 @@ jobs:
           minor=${{ inputs.minor-version }}
           patch=${{ inputs.patch-version }}+1  
           echo "BUILD_VERSION=$major.$minor.$patch" >> $GITHUB_ENV
+          echo ${{ env.BUILD_VERSION }}
 #      - name: Commit version to Current Branch
 #        id: commit-version
 #        if: ${{ inputs.release }}
