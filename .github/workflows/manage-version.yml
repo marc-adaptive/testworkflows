@@ -75,11 +75,12 @@ jobs:
         if: ${{ inputs.release && !inputs.pre-build }}
         shell: bash
         run:
-          let MAJOR=${{ inputs.major-version }}
-          let MINOR=${{ inputs.minor-version }}
-          let PATCH=${{ inputs.patch-version }}+1  
-          echo "BUILD_VERSION=$MAJOR.$MINOR.$PATCH-SNAPSHOT" >> $GITHUB_ENV
-          echo ${{ env.BUILD_VERSION }}
+          major=${{ inputs.major-version }}
+          minor=${{ inputs.minor-version }}
+          patch=${{ inputs.patch-version }}
+          let "patch_incr=patch+1"
+          version="$major.$minor.$patch_incr-SNAPSHOT"
+          echo "BUILD_VERSION=$version" >> $GITHUB_ENV
       - name: Test
         run: echo ${{ env.BUILD_VERSION }}
 #      - name: Commit version to Current Branch
