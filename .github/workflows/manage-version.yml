@@ -78,25 +78,25 @@ jobs:
           minor=${{ inputs.minor-version }}
           patch=${{ inputs.patch-version }}+1  
           echo "BUILD_VERSION=$major.$minor.$patch" >> $GITHUB_ENV
-      - name: Commit version to Current Branch
-        id: commit-version
-        if: ${{ inputs.release }}
-        run: |
-          git config user.name "github-actions"
-          git config user.email "build@aeron.io"
-          echo ${{ env.BUILD_VERSION }} > version.txt
-          git add version.txt
-          git status
-          git commit -m "${{ env.BUILD_VERSION }} released."
-          git push
-      - name: Tag Branch
-        id: tag-branch
-        if: ${{ inputs.release && inputs.pre-build }}
-        run: |
-          git tag -f ${{ env.BUILD_VERSION }}
-          git push origin refs/tags/${{ env.BUILD_VERSION }}
-      - name: Return current SHA
-        id: return-sha
-        run: |
-          git rev-parse HEAD
-          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+#      - name: Commit version to Current Branch
+#        id: commit-version
+#        if: ${{ inputs.release }}
+#        run: |
+#          git config user.name "github-actions"
+#          git config user.email "build@aeron.io"
+#          echo ${{ env.BUILD_VERSION }} > version.txt
+#          git add version.txt
+#          git status
+#          git commit -m "${{ env.BUILD_VERSION }} released."
+#          git push
+#      - name: Tag Branch
+#        id: tag-branch
+#        if: ${{ inputs.release && inputs.pre-build }}
+#        run: |
+#          git tag -f ${{ env.BUILD_VERSION }}
+#          git push origin refs/tags/${{ env.BUILD_VERSION }}
+#      - name: Return current SHA
+#        id: return-sha
+#        run: |
+#          git rev-parse HEAD
+#          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
