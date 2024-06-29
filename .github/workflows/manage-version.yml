@@ -74,10 +74,10 @@ jobs:
         id: identify-post-build-version
         if: ${{ inputs.release && !inputs.pre-build }}
         run:
-          let major=${{ inputs.major-version }}
-          let minor=${{ inputs.minor-version }}
-          let patch=${{ inputs.patch-version }}+1  
-          echo "BUILD_VERSION=$major.$minor.$patch-SNAPSHOT" >> $GITHUB_ENV
+          MAJOR=${{ inputs.major-version }}
+          MINOR=${{ inputs.minor-version }}
+          PATCH=${{ inputs.patch-version }}+1  
+          echo "BUILD_VERSION=$MAJOR.$MINOR.$PATCH-SNAPSHOT" >> $GITHUB_ENV
           echo ${{ env.BUILD_VERSION }}
 #      - name: Commit version to Current Branch
 #        id: commit-version
