@@ -86,12 +86,6 @@ jobs:
           SNAPSHOT_VERSION="$major.$minor_incr.$patch"
           NEW_BRANCH="release-$major.$minor.$patch"
           BRANCH_SNAPSHOT_VERSION="$major.$minor.$patch_incr-SNAPSHOT"
-          else
-          CREATE_BRANCH=false
-          SNAPSHOT_VERSION="$major.$minor.$patch_incr"
-          NEW_BRANCH=""
-          BRANCH_SNAPSHOT_VERSION=""
-          fi
   
           echo "release-version=$major.$minor.$patch" >> $GITHUB_ENV
           echo "create-branch=$CREATE_BRANCH" >> $GITHUB_ENV
