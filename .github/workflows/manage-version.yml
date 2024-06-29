@@ -73,6 +73,7 @@ jobs:
       - name: Post-build version
         id: identify-post-build-version
         if: ${{ inputs.release && !inputs.pre-build }}
+        shell: bash
         run:
           major=${{ inputs.major-version }}
           minor=${{ inputs.minor-version }}
@@ -80,6 +81,11 @@ jobs:
   
           let "patch_incr=patch+1"
           BRANCH_SNAPSHOT_VERSION="$major.$minor.$patch_incr-SNAPSHOT"
+  
+          echo "release-version=$major.$minor.$patch" >> $GITHUB_ENV
+          echo "create-branch=$CREATE_BRANCH" >> $GITHUB_ENV
+          echo "snapshot-version=$SNAPSHOT_VERSION-SNAPSHOT" >> $GITHUB_ENV
+          echo "new-branch=$NEW_BRANCH" >> $GITHUB_ENV
           echo "BUILD_VERSION=$BRANCH_SNAPSHOT_VERSION" >> $GITHUB_ENV
       - name: Test
         run: echo ${{ env.BUILD_VERSION }}
