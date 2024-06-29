@@ -78,11 +78,28 @@ jobs:
           major=${{ inputs.major-version }}
           minor=${{ inputs.minor-version }}
           patch=${{ inputs.patch-version }}
+  
+          let "minor_incr=minor+1"
           let "patch_incr=patch+1"
-          version="$major.$minor.$patch_incr-SNAPSHOT"
-          echo "BUILD_VERSION=$version" >> $GITHUB_ENV
+          
+          CREATE_BRANCH=true
+          SNAPSHOT_VERSION="$major.$minor_incr.$patch"
+          NEW_BRANCH="release-$major.$minor.$patch"
+          BRANCH_SNAPSHOT_VERSION="$major.$minor.$patch_incr-SNAPSHOT"
+          else
+          CREATE_BRANCH=false
+          SNAPSHOT_VERSION="$major.$minor.$patch_incr"
+          NEW_BRANCH=""
+          BRANCH_SNAPSHOT_VERSION=""
+          fi
+  
+          echo "release-version=$major.$minor.$patch" >> $GITHUB_ENV
+          echo "create-branch=$CREATE_BRANCH" >> $GITHUB_ENV
+          echo "snapshot-version=$SNAPSHOT_VERSION-SNAPSHOT" >> $GITHUB_ENV
+          echo "new-branch=$NEW_BRANCH" >> $GITHUB_ENV
+          echo "branch-snapshot-version=$BRANCH_SNAPSHOT_VERSION" >> $GITHUB_ENV
       - name: Test
-        run: echo ${{ env.BUILD_VERSION }}
+        run: echo ${{ env.release-version }}
 #      - name: Commit version to Current Branch
 #        id: commit-version
 #        if: ${{ inputs.release }}
