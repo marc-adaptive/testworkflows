@@ -77,9 +77,9 @@ jobs:
           let major=${{ inputs.major-version }}
           let minor=${{ inputs.minor-version }}
           let patch=${{ inputs.patch-version }}+1
-          echo $major
-          echo $minor
-          echo $patch
+          echo "$major"
+          echo "$minor"
+          echo "$patch"
           echo $nextversion
           echo $nextversion-SNAPSHOT
           
