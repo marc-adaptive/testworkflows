@@ -1,0 +1,25 @@
+name: Release notes
+
+on:
+  workflow_dispatch:
+
+
+jobs:
+  release:
+    name: Create release
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Create release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.sha }}
+          release_name: Release ${{ github.sha }}
+          draft: true
+          prerelease: false
+          commitish: ${{ github.sha }}
