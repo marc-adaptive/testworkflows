@@ -23,7 +23,7 @@ jobs:
           JF_URL: http://localhost:8081
         with:
           oidc-provider-name: github-jfrog
-          oidc-audience: my-aud
+          oidc-audience: my-aude
 
       - name: Publish Build info With JFrog CLI
         run: |
