@@ -5,4 +5,10 @@ public class Main {
         System.out.println("Hello world!");
         System.out.println("Returning success");
     }
+
+    public static void test() {
+    }
+
+    public static void test2() {
+    }
 }
